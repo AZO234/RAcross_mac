@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BUILD_THEOS=0
+BUILD_ANDROID=0
 
 LR_CORE=np2kai
 LR_CORE_SRC=~/NP2kai
@@ -64,16 +65,30 @@ mv log/${LR_CORE}.log log/${LR_CORE}_ios-arm64.log
 
 # iOS Theos
 if [ ${BUILD_THEOS} = 1 ] ; then
-rm -rf libretro-${LR_CORE}
-echo "=== iOS Theos - build start ==="
-if [ ${SRCFETCH} = 1 ] ; then
-./libretro-fetch.sh ${LR_CORE}
-else
-cp -rf ${LR_CORE_SRC} libretro-${LR_CORE}
+	rm -rf libretro-${LR_CORE}
+	echo "=== iOS Theos - build start ==="
+	if [ ${SRCFETCH} = 1 ] ; then
+	./libretro-fetch.sh ${LR_CORE}
+	else
+	cp -rf ${LR_CORE_SRC} libretro-${LR_CORE}
+	fi
+	./libretro-build-ios-theos.sh ${LR_CORE}
+	echo "=== iOS Theos - build end ==="
+	mv log/${LR_CORE}.log log/${LR_CORE}_ios-theos.log
 fi
-./libretro-build-ios-theos.sh ${LR_CORE}
-echo "=== iOS Theos - build end ==="
-mv log/${LR_CORE}.log log/${LR_CORE}_ios-theos.log
+
+# android-mk
+if [ ${BUILD_ANDROID} = 1 ] ; then
+	rm -rf libretro-${LR_CORE}
+	echo "=== android-mk - build start ==="
+	if [ ${SRCFETCH} = 1 ] ; then
+	./libretro-fetch.sh ${LR_CORE}
+	else
+	cp -rf ${LR_CORE_SRC} libretro-${LR_CORE}
+	fi
+	./libretro-build-android-mk.sh ${LR_CORE}
+	echo "=== android-mk - build end ==="
+	mv log/${LR_CORE}.log log/${LR_CORE}_android.log
 fi
 
 unset CC

@@ -25,7 +25,7 @@ install
 		3. ./setup.sh
 
 		- Homebrew
-		- Xcode
+		- Xcode (after installed, You must agree)
 
 	4. "RAcross setup is finished." displaied then close terminal and reboot
 
