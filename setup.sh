@@ -2,6 +2,7 @@
 
 SETUP_THEOS=0
 SETUP_ANDROID=0
+SETUP_EMSCRIPTEN=0
 
 RACROSS_SETUP_DELETE=1
 
@@ -20,7 +21,7 @@ RACROSS_INITSCRIPT=~/.profile
 # Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-brew install mas ldid xz wget
+brew install mas ldid xz wget nodejs cmake
 
 #mas signin someone@mail.com password
 
@@ -41,9 +42,23 @@ if [ ${SETUP_THEOS} = 1 ] ; then
 	git clone --depth=1 https://github.com/theos/sdks.git ${THEOS}/sdks
 	curl https://ghostbin.com/ghost.sh -o ${THEOS}/bin/ghost
 	chmod +x ${THEOS}/bin/ghost
-	if [ ! ${RACROSS_SETUP_DELETE} = 1 ] ; then
-		tar Jcvf ${RACROSS_CACHE}/theos.tar.xz ${THEOS}
-	fi
+#	if [ ! ${RACROSS_SETUP_DELETE} = 1 ] ; then
+#		tar Jcvf ${RACROSS_CACHE}/theos.tar.xz ${THEOS}
+#	fi
+fi
+
+# Emscripten
+if [ ${SETUP_EMSCRIPTEN} = 1 ] ; then
+	echo "*** setup Emscripten ***"
+	cd ${RACROSS_TOOLS}
+	git clone --depth=1 https://github.com/emscripten-core/emsdk.git
+	cd emsdk
+	./emsdk update
+	git pull
+	./emsdk install latest
+	./emsdk activate latest
+#	source ./emsdk_env.sh
+#	echo "source ${RACROSS_TOOLS}/emsdk/emsdk_env.sh" >> ${RACROSS_INITSCRIPT}
 fi
 
 # Android NDK
@@ -62,12 +77,15 @@ fi
 echo "*** setup libretro-super ***"
 cd ~
 git clone --depth=1 https://github.com/libretro/libretro-super.git
-chmod +x libretro-build-android-mk.sh
-tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
+patch -p1 -d libretro-super < ${RACROSS_BASE}/libretro-super.patch
+chmod +x libretro-super/libretro-build-android-mk.sh
+chmod +x libretro-super/libretro-build-emscripten.sh
+#tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
 
 # build scripts
 cp ${RACROSS_BASE}/build-core.sh ~/libretro-super/
 
+cd ~
 if [ ${RACROSS_SETUP_DELETE} = 1 ] ; then
 	rm -rf ${RACROSS_BASE}
 fi
