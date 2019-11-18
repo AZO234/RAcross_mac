@@ -77,9 +77,6 @@ fi
 echo "*** setup libretro-super ***"
 cd ~
 git clone --depth=1 https://github.com/libretro/libretro-super.git
-patch -p1 -d libretro-super < ${RACROSS_BASE}/libretro-super.patch
-chmod +x libretro-super/libretro-build-android-mk.sh
-chmod +x libretro-super/libretro-build-emscripten.sh
 #tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
 
 # build scripts

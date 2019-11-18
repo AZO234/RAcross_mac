@@ -84,6 +84,18 @@ if [ ${BUILD_THEOS} = 1 ] ; then
 	mv log/${LR_CORE}.log log/${LR_CORE}_ios-theos.log
 fi
 
+# tvOS ARM64
+rm -rf libretro-${LR_CORE}
+echo "=== tvOS ARM64 - build start ==="
+if [ ${LR_SRC_FETCH} = 1 ] ; then
+./libretro-fetch.sh ${LR_CORE}
+else
+cp -rf ${LR_CORE_SRC} libretro-${LR_CORE}
+fi
+./libretro-build-tvos-arm64.sh ${LR_CORE}
+echo "=== tvOS ARM64 - build end ==="
+mv log/${LR_CORE}.log log/${LR_CORE}_tvos-arm64.log
+
 # android-mk
 if [ ${BUILD_ANDROID} = 1 ] ; then
 	rm -rf libretro-${LR_CORE}

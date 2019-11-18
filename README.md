@@ -3,7 +3,7 @@ RAcross_mac
 
 RAcross is libretro(RA?)'s core cross build emvironment.
 
-	- Use macOS 10.14.4 Mojave (Vanilla)
+	- Use macOS 10.15.1 Catalina (Vanilla)
 
 RAcross_mac can test follow cross builds
 
@@ -11,7 +11,7 @@ RAcross_mac can test follow cross builds
 	- iOS
 	- iOS 9
 	- iOS ARM64
-
+	- tvOS ARM64
 
 install
 -------
