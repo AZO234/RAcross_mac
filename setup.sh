@@ -65,18 +65,21 @@ fi
 if [ ${SETUP_ANDROID} = 1 ] ; then
 	echo "*** setup Android NDK ***"
 	cd ${RACROSS_BASE}
-	wget https://dl.google.com/android/repository/android-ndk-r18b-darwin-x86_64.zip -P ${RACROSS_CACHE}
-	unzip ${RACROSS_CACHE}/android-ndk-r18b-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
-	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r18b
-	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r18b
-	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r18b" >> ${RACROSS_INITSCRIPT}
-	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r18b" >> ${RACROSS_INITSCRIPT}
+	wget https://dl.google.com/android/repository/android-ndk-r20-darwin-x86_64.zip -P ${RACROSS_CACHE}
+	unzip ${RACROSS_CACHE}/android-ndk-r20-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
+	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20
+	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r20
+	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20" >> ${RACROSS_INITSCRIPT}
+	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r20" >> ${RACROSS_INITSCRIPT}
 fi
 
 # libretro-super
 echo "*** setup libretro-super ***"
 cd ~
-git clone --depth=1 https://github.com/libretro/libretro-super.git
+git clone --depth=1 https://github.com/AZO234/libretro-super.git
+cd libretro-super
+git checkout fix
+cd ..
 #tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
 
 # build scripts
