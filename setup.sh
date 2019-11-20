@@ -16,7 +16,7 @@ export RACROSS_TOOLS=${HOME}/RAcross-tools
 rm -rf ${RACROSS_TOOLS}
 mkdir -p ${RACROSS_TOOLS}
 
-RACROSS_INITSCRIPT=~/.profile
+RACROSS_INITSCRIPT=${HOME}/.zprofile
 
 # Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -32,23 +32,29 @@ git
 sudo xcodebuild -license
 
 # Theos
-if [ ${SETUP_THEOS} = 1 ] ; then
+if [[ ${SETUP_THEOS} = 1 ]] ; then
 	echo "*** setup Theos ***"
 	cd ${RACROSS_BASE}
 	export THEOS=${RACROSS_TOOLS}/theos
 	echo "export THEOS=${RACROSS_TOOLS}/theos" >> ${RACROSS_INITSCRIPT}
-	git clone --recursive https://github.com/theos/theos.git ${THEOS}
+#	git clone --recursive https://github.com/AZO234/theos.git ${THEOS}
+	git clone https://github.com/AZO234/theos.git ${THEOS}
+	cd ${THEOS}
+	git checkout fix
+	git submodule update --init --recursive
+	cd ${RACROSS_BASE}
 	rm -rf ${THEOS}/sdks
 	git clone --depth=1 https://github.com/theos/sdks.git ${THEOS}/sdks
-	curl https://ghostbin.com/ghost.sh -o ${THEOS}/bin/ghost
+#	curl https://ghostbin.com/ghost.sh -o ${THEOS}/bin/ghost
+	curl https://gist.githubusercontent.com/supermamon/e5d7d19286f7fb471c85d0b1127d5e47/raw/a57b0f8cf7864e53169bb5290ce56be2c7631403/ghost.sh -o ${THEOS}/bin/ghost
 	chmod +x ${THEOS}/bin/ghost
-#	if [ ! ${RACROSS_SETUP_DELETE} = 1 ] ; then
+#	if [[ ! ${RACROSS_SETUP_DELETE} = 1 ]] ; then
 #		tar Jcvf ${RACROSS_CACHE}/theos.tar.xz ${THEOS}
 #	fi
 fi
 
 # Emscripten
-if [ ${SETUP_EMSCRIPTEN} = 1 ] ; then
+if [[ ${SETUP_EMSCRIPTEN} = 1 ]] ; then
 	echo "*** setup Emscripten ***"
 	cd ${RACROSS_TOOLS}
 	git clone --depth=1 https://github.com/emscripten-core/emsdk.git
@@ -62,7 +68,7 @@ if [ ${SETUP_EMSCRIPTEN} = 1 ] ; then
 fi
 
 # Android NDK
-if [ ${SETUP_ANDROID} = 1 ] ; then
+if [[ ${SETUP_ANDROID} = 1 ]] ; then
 	echo "*** setup Android NDK ***"
 	cd ${RACROSS_BASE}
 	wget https://dl.google.com/android/repository/android-ndk-r20-darwin-x86_64.zip -P ${RACROSS_CACHE}
@@ -76,9 +82,9 @@ fi
 # libretro-super
 echo "*** setup libretro-super ***"
 cd ~
-git clone --depth=1 https://github.com/AZO234/libretro-super.git
+git clone https://github.com/AZO234/libretro-super.git
 cd libretro-super
-git checkout fix
+git checkout AZO_fix
 cd ..
 #tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
 
@@ -86,7 +92,7 @@ cd ..
 cp ${RACROSS_BASE}/build-core.sh ~/libretro-super/
 
 cd ~
-if [ ${RACROSS_SETUP_DELETE} = 1 ] ; then
+if [[ ${RACROSS_SETUP_DELETE} = 1 ]] ; then
 	rm -rf ${RACROSS_BASE}
 fi
 

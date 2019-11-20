@@ -32,10 +32,12 @@ install
 usage
 -----
 
-	1. open terminal
-	2. locate your core source at /home/USER/
-	3. edit libretro-super/build-core.sh, LR_CORE and LR_CORE_SRC value
-	4. cd libretro-super
-	5. ./build-core.sh
-	6. build logs are output in log dir
+	1. login to Apple store
+	2. open terminal
+	3. locate your core source at /home/USER/
+	4. edit libretro-super/build-core.sh, LR_CORE and LR_CORE_SRC value
+	5. cd libretro-super
+	6. ./build-core.sh
+	7. build logs are output in 'log' dir  
+	binalys are output in 'dist' dir
 
