@@ -4,6 +4,8 @@ SETUP_THEOS=0
 SETUP_ANDROID=0
 SETUP_EMSCRIPTEN=0
 
+RACROSS_SETUP_GIT=0
+
 RACROSS_SETUP_DELETE=1
 
 export RACROSS_BASE=`pwd`
@@ -31,16 +33,21 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 git
 sudo xcodebuild -license
 
+if [[ ${RACROSS_SETUP_GIT} = 1 ]] ; then
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+fi
+
 # Theos
 if [[ ${SETUP_THEOS} = 1 ]] ; then
 	echo "*** setup Theos ***"
 	cd ${RACROSS_BASE}
 	export THEOS=${RACROSS_TOOLS}/theos
 	echo "export THEOS=${RACROSS_TOOLS}/theos" >> ${RACROSS_INITSCRIPT}
-#	git clone --recursive https://github.com/AZO234/theos.git ${THEOS}
-	git clone https://github.com/AZO234/theos.git ${THEOS}
+	git clone https://github.com/theos/theos.git ${THEOS}
 	cd ${THEOS}
-	git checkout fix
+	git remote add AZO234 https://github.com/AZO234/theos.git
+	git pull --no-edit AZO234 fix
 	git submodule update --init --recursive
 	cd ${RACROSS_BASE}
 	rm -rf ${THEOS}/sdks
@@ -71,20 +78,21 @@ fi
 if [[ ${SETUP_ANDROID} = 1 ]] ; then
 	echo "*** setup Android NDK ***"
 	cd ${RACROSS_BASE}
-	wget https://dl.google.com/android/repository/android-ndk-r20-darwin-x86_64.zip -P ${RACROSS_CACHE}
-	unzip ${RACROSS_CACHE}/android-ndk-r20-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
-	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20
-	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r20
-	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20" >> ${RACROSS_INITSCRIPT}
-	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r20" >> ${RACROSS_INITSCRIPT}
+	wget https://dl.google.com/android/repository/android-ndk-r20b-darwin-x86_64.zip -P ${RACROSS_CACHE}
+	unzip ${RACROSS_CACHE}/android-ndk-r20b-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
+	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20b
+	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r20b
+	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r20b" >> ${RACROSS_INITSCRIPT}
+	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r20b" >> ${RACROSS_INITSCRIPT}
 fi
 
 # libretro-super
 echo "*** setup libretro-super ***"
 cd ~
-git clone https://github.com/AZO234/libretro-super.git
+git clone https://github.com/libretro/libretro-super.git
 cd libretro-super
-git checkout AZO_fix
+git remote add AZO234 https://github.com/AZO234/libretro-super.git
+git pull --no-edit AZO234 AZO_fix
 cd ..
 #tar Jcvf ${RACROSS_CACHE}/libretro-super.tar.xz libretro-super
 

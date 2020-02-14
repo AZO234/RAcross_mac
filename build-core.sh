@@ -105,9 +105,8 @@ if [[ ${BUILD_ANDROID} = 1 ]] ; then
 	else
 	cp -rf ${LR_CORE_SRC} libretro-${LR_CORE}
 	fi
-	./libretro-build-android-mk.sh ${LR_CORE}
+	./libretro-build-android-mk.sh ${LR_CORE} 2>&1 | tee log/${LR_CORE}_android.log
 	echo "=== android-mk - build end ==="
-	mv log/${LR_CORE}.log log/${LR_CORE}_android.log
 fi
 
 # Emscripten
