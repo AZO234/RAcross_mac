@@ -51,7 +51,7 @@ if [[ ${SETUP_THEOS} = 1 ]] ; then
 	git submodule update --init --recursive
 	cd ${RACROSS_BASE}
 	rm -rf ${THEOS}/sdks
-	git clone --depth=1 https://github.com/theos/sdks.git ${THEOS}/sdks
+	git clone https://github.com/theos/sdks.git ${THEOS}/sdks
 #	curl https://ghostbin.com/ghost.sh -o ${THEOS}/bin/ghost
 	curl https://gist.githubusercontent.com/supermamon/e5d7d19286f7fb471c85d0b1127d5e47/raw/a57b0f8cf7864e53169bb5290ce56be2c7631403/ghost.sh -o ${THEOS}/bin/ghost
 	chmod +x ${THEOS}/bin/ghost
@@ -64,7 +64,7 @@ fi
 if [[ ${SETUP_EMSCRIPTEN} = 1 ]] ; then
 	echo "*** setup Emscripten ***"
 	cd ${RACROSS_TOOLS}
-	git clone --depth=1 https://github.com/emscripten-core/emsdk.git
+	git clone https://github.com/emscripten-core/emsdk.git
 	cd emsdk
 	./emsdk update
 	git pull
