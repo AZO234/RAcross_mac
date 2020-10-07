@@ -23,7 +23,7 @@ RACROSS_INITSCRIPT=${HOME}/.zprofile
 # Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-brew install mas ldid xz wget nodejs cmake
+brew install gpatch mas ldid xz wget nodejs cmake ninja sdl sdl_mixer sdl_ttf sdl2 sdl2_mixer sdl2_ttf libusb wxwidgets mercurial
 
 #mas signin someone@mail.com password
 
@@ -75,12 +75,12 @@ fi
 if [[ ${SETUP_ANDROID} = 1 ]] ; then
 	echo "*** setup Android NDK ***"
 	cd ${RACROSS_BASE}
-	wget https://dl.google.com/android/repository/android-ndk-r21-darwin-x86_64.zip -P ${RACROSS_CACHE}
-	unzip ${RACROSS_CACHE}/android-ndk-r21-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
-	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r21
-	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r21
-	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r21" >> ${RACROSS_INITSCRIPT}
-	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r21" >> ${RACROSS_INITSCRIPT}
+	wget https://dl.google.com/android/repository/android-ndk-r21b-darwin-x86_64.zip -P ${RACROSS_CACHE}
+	unzip ${RACROSS_CACHE}/android-ndk-r21b-darwin-x86_64.zip -d ${RACROSS_TOOLS}/
+	export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r21b
+	export PATH=$PATH:${RACROSS_TOOLS}/android-ndk-r21b
+	echo "export NDK_ROOT_DIR=${RACROSS_TOOLS}/android-ndk-r21b" >> ${RACROSS_INITSCRIPT}
+	echo "export PATH=\$PATH:${RACROSS_TOOLS}/android-ndk-r21b" >> ${RACROSS_INITSCRIPT}
 fi
 
 # libretro-super
